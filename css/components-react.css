@@ -54,6 +54,25 @@
   width: auto;
 }
 
+/* HeroUI's InputGroup also uses .input-group and wraps the field in a
+   bordered, centered container (border rounded-field bg-field items-center
+   min-h-9 shadow-field) — those bleed through onto Griffith's .input-group
+   label+field wrapper. Reset every property HeroUI adds that Griffith's
+   .input-group doesn't set, so the input renders undecorated. */
+.input-group {
+  align-items: stretch;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+/* Re-assert the horizontal variant's centering (the reset above would clear it). */
+.input-group-horizontal {
+  align-items: center;
+}
+
 
 /* ── HeroUI Card compound (BEM slots) ──
    HeroUI's Card renders .card__header / __content / __footer.
