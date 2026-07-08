@@ -24,12 +24,19 @@ Use `@main` for the latest, or pin to a tag (e.g. `@v1.0`) for production stabil
 
 ## Design-system CSS (for React consumers)
 
-Import in the React project's `tailwind.css`, in this order (both Griffith files are unlayered, so they beat HeroUI's `@layer`; `components-react.css` comes after `components.css` so its overrides win):
+Load the plain component stylesheets via `<link>` in `index.html` — **not** a CSS `@import` (Tailwind v4 / Lightning CSS drops remote `@import url()` at build). Both Griffith files are unlayered so they beat HeroUI's `@layer`; `components-react.css` comes after `components.css`:
 
+```html
+<!-- index.html <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/css/components.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/css/components-react.css">
+```
+
+Only the Tailwind-processed layer goes in the CSS entry:
 ```css
-@import url("https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/css/components.css");
-@import url("https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/css/components-react.css");
+/* src/index.css */
 @import "tailwindcss";
+@import "./styles/theme.css";   /* vendored — see below */
 @import "@heroui/react/styles";
 ```
 
