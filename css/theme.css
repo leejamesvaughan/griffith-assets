@@ -1,0 +1,147 @@
+/* ============================================================
+   Griffith Design System – Canonical Theme (tokens + fonts)
+   ============================================================
+   SINGLE SOURCE OF TRUTH for design tokens and the Griffith
+   typeface. Previously the @theme {} block was hand-copied into
+   27 HTML files; this file consolidates it into one place.
+
+   Consumers:
+     • The React kit imports this file once at the app root so
+       every custom utility (text-ui-text, bg-griffith-red,
+       rounded-lg overrides, heading-1, para, …) regenerates
+       identically to the HTML pages.
+     • New/refactored HTML pages should reference these values
+       rather than re-pasting their own @theme block.
+
+   Source-of-truth rule (see LOGIC.md D7):
+     • This file is authoritative for UTILITY tokens (colours,
+       fonts, type scale, radius, spacing, shadow).
+     • components.css hardcoded hex is authoritative for COMPONENT
+       colour (.btn-primary #E01135, etc.). The brand red #E01135
+       lives in BOTH (--color-griffith-red here + .btn-primary in
+       components.css) — change them together.
+
+   Removed vs the old inline blocks: the dead --color-btn-*
+   tokens (purple/teal/amber) that never matched the rendered
+   buttons and were used zero times. Don't re-add them.
+   ============================================================ */
+
+
+/* ── Font faces ──
+   HOSTED COPY: font src points at the absolute jsDelivr URL so this
+   file resolves the fonts no matter where it's vendored. (The repo
+   copy at src/assets/css/theme.css uses ../fonts relative paths.) */
+@font-face {
+  font-family: 'Griffith Sans Display';
+  src: url('https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/fonts/GriffithSansDisplay-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Griffith Sans Display';
+  src: url('https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/fonts/GriffithSansDisplay-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+
+@theme {
+
+  /* ── Griffith colours ── */
+  --color-griffith-black: #000000;
+  --color-griffith-red: #E01135;
+
+  /* ── UI colours ── */
+  --color-ui-header: #000000;
+  --color-ui-text: #6B6B6B;
+  --color-ui-recessed: #F8F8F8;
+  --color-ui-border: #E3E3E3;
+  --color-ui-border-light: #F3F3F3;
+  --color-ui-hover: #BD0A18;
+  --color-ui-success: #00B140;
+  --color-ui-warning: #FF7237;
+  --color-ui-shadow: #F1F1F1;
+
+  /* ── Secondary colours ── */
+  --color-secondary-graphite-grey: #707070;
+  --color-secondary-burnt-sienna: #8E2831;
+  --color-secondary-dark-brown: #674D44;
+  --color-secondary-wheat-yellow: #9F7D5E;
+  --color-secondary-moss-green: #306547;
+  --color-secondary-river-blue: #364D72;
+  --color-secondary-wildberry-violet: #713153;
+  --color-secondary-stone-grey: #4D4D5A;
+  --color-secondary-sunset-pink: #EB7D92;
+  --color-secondary-sunflower-orange: #EDA768;
+  --color-secondary-sunshine-yellow: #F1EF94;
+  --color-secondary-spring-green: #B5BD69;
+  --color-secondary-oceanic-blue: #86A5ED;
+  --color-secondary-dew-gum-violet: #F4B0D2;
+  --color-secondary-cloud-grey: #EBEBEB;
+  --color-secondary-bloom-pink: #FFC8CA;
+  --color-secondary-sandstone-orange: #FFDFC1;
+  --color-secondary-butter-yellow: #FFF5C3;
+  --color-secondary-seafoam-green: #E4EFC3;
+  --color-secondary-sky-blue: #DBF6FF;
+  --color-secondary-blossoming-violet: #FFEBF0;
+
+  /* ── Typography ── */
+  --font-display: 'Griffith Sans Display', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Griffith Sans Display', ui-sans-serif, system-ui, sans-serif;
+  --text-heading-1: 2.5rem;
+  --text-heading-2: 1.875rem;
+  --text-heading-3: 1.375rem;
+  --text-heading-4: 1.125rem;
+  --text-para-sml: 0.875rem;
+  --text-para: 1rem;
+  --text-para-lg: 1.125rem;
+  --text-para-xl: 1.6rem;
+
+  /* ── Line heights ── */
+  --leading-heading-1: 2.75rem;
+  --leading-heading-2: 2.1875rem;
+  --leading-heading-3: 1.75rem;
+  --leading-heading-4: 1.5625rem;
+  --leading-para-sml: 1.375rem;
+  --leading-para: 1.625rem;
+  --leading-para-lg: 1.75rem;
+  --leading-para-xl: 2.25rem;
+
+  /* ── Spacing scale (design tokens) ──
+     Named --space-x on purpose, NOT --spacing-x. Tailwind v4's
+     --spacing namespace also backs the sizing utilities, so suffixes
+     like md, lg, xl, 2xl, 3xl shadow the container scale and hijack the
+     max-w, w and min-w utilities — e.g. max-w-3xl would resolve to 4rem
+     instead of the intended 48rem container. Use via var(--space-lg). */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* ── Border radius (overrides stock Tailwind — keep in sync) ── */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* ── Shadow ── */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.08);
+}
+
+
+/* ── Composed typography utilities ──
+   Each bakes font-family + size + line-height + weight + colour
+   so headings/body never need those values restated in markup. */
+@utility heading-1 { font-family: var(--font-display); font-size: var(--text-heading-1); line-height: var(--leading-heading-1); font-weight: 700; letter-spacing: 0rem; color: var(--color-griffith-black); }
+@utility heading-2 { font-family: var(--font-display); font-size: var(--text-heading-2); line-height: var(--leading-heading-2); font-weight: 700; color: var(--color-griffith-black); }
+@utility heading-3 { font-family: var(--font-display); font-size: var(--text-heading-3); line-height: var(--leading-heading-3); font-weight: 700; color: var(--color-griffith-black); }
+@utility heading-4 { font-family: var(--font-display); font-size: var(--text-heading-4); line-height: var(--leading-heading-4); font-weight: 700; color: var(--color-griffith-black); }
+@utility para-sml { font-family: var(--font-body); font-size: var(--text-para-sml); line-height: var(--leading-para-sml); font-weight: 400; color: var(--color-ui-text); }
+@utility para { font-family: var(--font-body); font-size: var(--text-para); line-height: var(--leading-para); font-weight: 400; color: var(--color-ui-text); }
+@utility para-lg { font-family: var(--font-body); font-size: var(--text-para-lg); line-height: var(--leading-para-lg); font-weight: 400; color: var(--color-ui-text); }
+@utility para-xl { font-family: var(--font-body); font-size: var(--text-para-xl); line-height: var(--leading-para-xl); font-weight: 400; color: var(--color-ui-text); }

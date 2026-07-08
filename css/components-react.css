@@ -1,0 +1,123 @@
+/* ============================================================
+   Griffith Design System – React / HeroUI v3 Compatibility Layer
+   ============================================================
+   OVERLAY — import this AFTER components.css, ONLY in the React
+   project. It does NOT belong on the plain-HTML pages (those
+   have no HeroUI, so these rules would be inert noise there).
+
+   Purpose: counteract HeroUI v3's own CSS where its generic class
+   names collide with Griffith's, and recolour HeroUI's react-aria
+   primitives to the Griffith brand. Appearance still comes from
+   Griffith values — this file only neutralises HeroUI defaults.
+
+   Import order (React project's tailwind.css):
+     @import ".../components.css?v=N";        ← Griffith base (canonical)
+     @import ".../components-react.css?v=N";   ← THIS file (must come after)
+     @import "tailwindcss";
+     @import "@heroui/react/styles";
+   Both Griffith files are unlayered, so they beat HeroUI's
+   @layer utilities regardless of import position; this file comes
+   after components.css so its overrides win on equal specificity.
+
+   Light-only: the Griffith design system does NOT ship a dark
+   theme (the dev's html.theme-dark system is deliberately excluded
+   — decided 2026-07-08). Do not add dark-mode rules here.
+
+   ⚠️ INCOMPLETE — this covers the documented HeroUI *gotcha fixes*
+   only. The full slot-level theming (Select/Input/DatePicker
+   appearance via .select__trigger, .list-box-item, .input, .label,
+   …) is still to be authored — as part of building those wrappers,
+   mapping to existing Griffith values in components.css / theme.css
+   (legitimate reuse, not re-derivation). See LOGIC.md D8 / STATE
+   item 5.
+   ============================================================ */
+
+
+/* ── Class-name collisions ──
+   HeroUI defines its own .card and .pagination and adds properties
+   Griffith doesn't declare, which then bleed through. Reset every
+   colliding property explicitly. (Check node_modules/@heroui/styles/
+   dist/components/*.css when a component looks broken after adding
+   HeroUI.) */
+
+/* HeroUI .card adds `gap-3 p-4 flex-col`; Griffith puts padding on
+   card-header/body/footer, so zero the base gap + padding it added. */
+.card {
+  gap: 0;
+  padding: 0;
+}
+
+/* HeroUI .pagination adds `gap-4 flex-col justify-between w-full`. */
+.pagination {
+  flex-direction: row;
+  justify-content: flex-start;
+  width: auto;
+}
+
+
+/* ── HeroUI Card compound (BEM slots) ──
+   HeroUI's Card renders .card__header / __content / __footer.
+   It sets flex-direction: column on the header, which with
+   align-items: center would centre content horizontally. */
+.card__header {
+  flex-direction: row;
+}
+
+
+/* ── HeroUI Tabs (react-aria) ──
+   Recolour the selected indicator + focus ring to Griffith red.
+   Per-tab selected-label colour stays inline
+   (className="data-[selected=true]:text-griffith-red!") — never a
+   global rule recolouring all selected tabs. */
+.tabs {
+  --accent: #E01135;
+  --focus: #E01135;
+}
+
+
+/* ── HeroUI DatePicker (react-aria) ── */
+
+/* Focus ring is blue by default — recolour to Griffith red. */
+.date-input-group {
+  --accent: #E01135;
+  --focus: #E01135;
+}
+.date-input-group [data-focus-within="true"] {
+  border-color: #E01135;
+  box-shadow: 0 0 0 3px rgba(224, 17, 53, 0.08);
+}
+
+/* Calendar popover is clipped — HeroUI sets max-width:
+   var(--trigger-width) + overflow-x: hidden, cutting off the
+   forward month-nav button. */
+.date-picker__popover {
+  max-width: none;
+  width: auto;
+  overflow-x: visible;
+}
+
+
+/* ── Form field error positioning ──
+   <FieldError> in a fixed-height flex row shifts siblings when it
+   appears. Anchor it out of flow beneath its field. */
+[data-slot="date-picker"] { position: relative; }
+
+.select > .field-error,
+[data-slot="textfield"] > .field-error,
+[data-slot="date-picker"] > .field-error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+}
+
+
+/* ── STILL TO AUTHOR (as part of building the wrappers) ──
+   Full BEM slot appearance: .select__trigger / __value /
+   __indicator / __popover, .list-box / .list-box-item,
+   .input, .label, [data-slot="textfield"] with react-aria state
+   attrs ([data-hovered], [data-focused], [data-selected],
+   [aria-expanded], [data-invalid]).
+   Map these to existing Griffith values in components.css /
+   theme.css. The dev's components.css is an optional reference.
+   (No dark mode — see header.) */
