@@ -28,9 +28,9 @@
 
 
 /* ── Font faces ──
-   HOSTED COPY: font src points at the absolute jsDelivr URL so this
-   file resolves the fonts no matter where it's vendored. (The repo
-   copy at src/assets/css/theme.css uses ../fonts relative paths.) */
+   Griffith Sans Display, Regular (400) + Bold (700). Paths are
+   relative to this file (src/assets/css/ → src/assets/fonts/).
+   The React kit re-points these to its bundled copies. */
 @font-face {
   font-family: 'Griffith Sans Display';
   src: url('https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/fonts/GriffithSansDisplay-Regular.otf') format('opentype');
