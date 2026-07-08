@@ -73,6 +73,37 @@
   align-items: center;
 }
 
+/* HeroUI's ProgressBar also uses .progress-bar and makes it a CSS grid
+   (display:grid, gap-1, grid-template-areas) — that bleeds onto Griffith's
+   .progress-bar track and breaks the fill layout (thin/misplaced bars).
+   Restore Griffith's simple block track. */
+.progress-bar {
+  display: block;
+  gap: 0;
+  grid-template-columns: none;
+  grid-template-areas: none;
+}
+
+/* HeroUI's Badge also uses .badge and adds min-h-7 / min-w-7 (forces a ≥28px
+   pill) plus a 1px border and gap. Griffith's .badge sizes itself by padding. */
+.badge {
+  min-height: 0;
+  min-width: 0;
+  border: none;
+  gap: 0;
+}
+
+/* HeroUI's Switch also uses .switch and sets flex-direction: column, which
+   would stack Griffith's track + label vertically instead of side-by-side. */
+.switch {
+  flex-direction: row;
+}
+
+/* Audited 2026-07-08: .avatar .skeleton .toast .tooltip also collide, but
+   Griffith already declares every property HeroUI would bleed (or wins via
+   specificity / size classes), so they need no reset. Re-run the audit in
+   RULES.md § HeroUI collisions when adding a component or bumping HeroUI. */
+
 
 /* ── HeroUI Card compound (BEM slots) ──
    HeroUI's Card renders .card__header / __content / __footer.
