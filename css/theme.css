@@ -2,35 +2,16 @@
    Griffith Design System – Canonical Theme (tokens + fonts)
    ============================================================
    SINGLE SOURCE OF TRUTH for design tokens and the Griffith
-   typeface. Previously the @theme {} block was hand-copied into
-   27 HTML files; this file consolidates it into one place.
+   typeface.
 
    Consumers:
      • The React kit imports this file once at the app root so
        every custom utility (text-ui-text, bg-griffith-red,
        rounded-lg overrides, heading-1, para, …) regenerates
        identically to the HTML pages.
-     • New/refactored HTML pages should reference these values
-       rather than re-pasting their own @theme block.
 
-   Source-of-truth rule (see LOGIC.md D7):
-     • This file is authoritative for UTILITY tokens (colours,
-       fonts, type scale, radius, spacing, shadow).
-     • components.css hardcoded hex is authoritative for COMPONENT
-       colour (.btn-primary #E01135, etc.). The brand red #E01135
-       lives in BOTH (--color-griffith-red here + .btn-primary in
-       components.css) — change them together.
-
-   Removed vs the old inline blocks: the dead --color-btn-*
-   tokens (purple/teal/amber) that never matched the rendered
-   buttons and were used zero times. Don't re-add them.
    ============================================================ */
 
-
-/* ── Font faces ──
-   Griffith Sans Display, Regular (400) + Bold (700). Paths are
-   relative to this file (src/assets/css/ → src/assets/fonts/).
-   The React kit re-points these to its bundled copies. */
 @font-face {
   font-family: 'Griffith Sans Display';
   src: url('https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/fonts/GriffithSansDisplay-Regular.otf') format('opentype');
