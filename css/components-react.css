@@ -47,11 +47,15 @@
   padding: 0;
 }
 
-/* HeroUI .pagination adds `gap-4 flex-col justify-between w-full`. */
+/* HeroUI .pagination adds `gap-4 flex-col justify-between w-full`; its
+   .pagination--sm/--lg add `size-8/10` (a fixed height) on the container.
+   height:auto here (unlayered) also wins for the sized variants, since the
+   element always carries the .pagination class. */
 .pagination {
   flex-direction: row;
   justify-content: flex-start;
   width: auto;
+  height: auto;
 }
 
 /* HeroUI's InputGroup also uses .input-group and wraps the field in a
@@ -99,10 +103,21 @@
   flex-direction: row;
 }
 
-/* Audited 2026-07-08: .avatar .skeleton .toast .tooltip also collide, but
-   Griffith already declares every property HeroUI would bleed (or wins via
-   specificity / size classes), so they need no reset. Re-run the audit in
-   RULES.md § HeroUI collisions when adding a component or bumping HeroUI. */
+/* HeroUI uses .skeleton--shimmer as an ABSOLUTE child overlay (position:
+   absolute; inset:0; -translate-x-full for the sweep). Griffith uses it as a
+   MODIFIER on the skeleton element (its shimmer is a background gradient), so
+   HeroUI's transform bleeds and shifts the whole skeleton off-screen. Reset the
+   positioning; Griffith's background + animation win on their own. (.skeleton
+   base and .skeleton--pulse are safe — Griffith covers those.) */
+.skeleton--shimmer {
+  inset: auto;
+  transform: none;
+}
+
+/* Audited 2026-07-08: .avatar .toast .tooltip also collide, but Griffith
+   already declares every property HeroUI would bleed (or wins via specificity /
+   size classes), so they need no reset. Re-run the audit in RULES.md § HeroUI
+   collisions when adding a component or bumping HeroUI. */
 
 
 /* ── HeroUI Card compound (BEM slots) ──
