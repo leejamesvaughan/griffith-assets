@@ -112,12 +112,107 @@
 }
 
 
-/* ── STILL TO AUTHOR (as part of building the wrappers) ──
-   Full BEM slot appearance: .select__trigger / __value /
-   __indicator / __popover, .list-box / .list-box-item,
-   .input, .label, [data-slot="textfield"] with react-aria state
-   attrs ([data-hovered], [data-focused], [data-selected],
-   [aria-expanded], [data-invalid]).
-   Map these to existing Griffith values in components.css /
-   theme.css. The dev's components.css is an optional reference.
-   (No dark mode — see header.) */
+/* ── HeroUI Select slots (react-aria) ──
+   Maps HeroUI's Select/ListBox slot classes to the Griffith values
+   from components.css § SELECT (.select-trigger / -menu / -option).
+   Slot class names per the consuming project's conventions. */
+.select__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #000000;
+  background: #ffffff;
+  border: 1px solid #E3E3E3;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.select__trigger[data-hovered] { border-color: #CFCFCF; }
+.select__trigger[aria-expanded="true"] { border-color: #000000; }
+.select__trigger[data-focused] {
+  outline: 2px solid #E01135;
+  outline-offset: 2px;
+}
+
+.select__value[data-placeholder] { color: #6B6B6B; }
+
+.select__indicator {
+  width: 14px;
+  height: 14px;
+  color: #6B6B6B;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+.select__trigger[aria-expanded="true"] .select__indicator { transform: rotate(180deg); }
+
+.select__popover,
+.list-box {
+  padding: 0.25rem;
+  background: #ffffff;
+  border: 1px solid #E3E3E3;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.08);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.list-box-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.875rem;
+  color: #000000;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.list-box-item[data-hovered],
+.list-box-item[data-focused] { background: #F3F3F3; }
+.list-box-item[data-selected] {
+  background: #FFF2F3;
+  color: #E01135;
+  font-weight: 500;
+}
+
+
+/* ── HeroUI Input / TextField slots ──
+   Maps to components.css § INPUT (.input-field / -label / -error-msg). */
+.input,
+[data-slot="textfield"] .input {
+  font-size: 0.875rem;
+  color: #6B6B6B;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #E3E3E3;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  width: 100%;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.input[data-hovered] { border-color: #b0b0b0; }
+.input[data-focused] {
+  border-color: #E01135;
+  box-shadow: 0 0 0 3px rgba(224, 17, 53, 0.08);
+}
+.input[data-invalid],
+[data-slot="textfield"][data-invalid] .input { border-color: #E01135; }
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.field-error {
+  font-size: 0.75rem;
+  color: #E01135;
+  margin-top: 0.125rem;
+}
+
+
+/* (Tabs accent is set in the HeroUI Tabs section above.
+   No dark mode — the system is light-only, see header.) */

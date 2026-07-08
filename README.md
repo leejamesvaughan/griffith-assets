@@ -28,7 +28,7 @@ Import in the React project's `tailwind.css`, in this order (both Griffith files
 
 ```css
 @import url("https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/css/components.css?v=1");
-@import url("https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/css/components-react.css?v=1");
+@import url("https://cdn.jsdelivr.net/gh/leejamesvaughan/griffith-assets@main/css/components-react.css?v=2");
 @import "tailwindcss";
 @import "@heroui/react/styles";
 ```
