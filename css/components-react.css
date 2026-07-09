@@ -177,10 +177,13 @@
 }
 
 
-/* ── HeroUI Select slots (react-aria) ──
-   Maps HeroUI's Select/ListBox slot classes to the Griffith values
-   from components.css § SELECT (.select-trigger / -menu / -option).
-   Slot class names per the consuming project's conventions. */
+/* ── HeroUI Select slots (verified vs @heroui/styles 3.2.2) ──
+   Maps HeroUI's real Select/ListBox selectors to the Griffith values from
+   components.css § SELECT. ⚠️ Mixed conventions (confirmed in the shipped CSS,
+   NOT the dev's RULES list): the TRIGGER uses data-attributes
+   (data-hovered/focus-visible/open="true"); the LIST ITEMS use native
+   pseudo-classes (:hover / :focus-visible) + [aria-selected="true"]. Match
+   HeroUI's own selectors so the unlayered overlay beats its @layer rules. */
 .select__trigger {
   display: inline-flex;
   align-items: center;
@@ -197,14 +200,14 @@
   cursor: pointer;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
-.select__trigger[data-hovered] { border-color: #CFCFCF; }
-.select__trigger[aria-expanded="true"] { border-color: #000000; }
-.select__trigger[data-focused] {
+.select__trigger[data-hovered="true"] { border-color: #CFCFCF; }
+.select__trigger[data-open="true"] { border-color: #000000; }
+.select__trigger[data-focus-visible="true"] {
   outline: 2px solid #E01135;
   outline-offset: 2px;
 }
 
-.select__value[data-placeholder] { color: #6B6B6B; }
+.select__value[data-placeholder="true"] { color: #6B6B6B; }
 
 .select__indicator {
   width: 14px;
@@ -213,10 +216,13 @@
   flex-shrink: 0;
   transition: transform 0.15s ease;
 }
-.select__trigger[aria-expanded="true"] .select__indicator { transform: rotate(180deg); }
+.select__trigger[data-open="true"] .select__indicator { transform: rotate(180deg); }
 
-.select__popover,
-.list-box {
+/* Container chrome on the popover ONLY. HeroUI nests .list-box inside
+   .select__popover and gives the list-box its own p-1 + mt-1 — styling both
+   produced a box-in-a-box ("grey box outside"). Reset the list-box to a
+   transparent inner holder so there's one clean Griffith container. */
+.select__popover {
   padding: 0.25rem;
   background: #ffffff;
   border: 1px solid #E3E3E3;
@@ -224,6 +230,13 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.08);
   max-height: 260px;
   overflow-y: auto;
+}
+.list-box {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .list-box-item {
@@ -236,9 +249,9 @@
   border-radius: 6px;
   cursor: pointer;
 }
-.list-box-item[data-hovered],
-.list-box-item[data-focused] { background: #F3F3F3; }
-.list-box-item[data-selected] {
+.list-box-item:hover,
+.list-box-item:focus-visible { background: #F3F3F3; }
+.list-box-item[aria-selected="true"] {
   background: #FFF2F3;
   color: #E01135;
   font-weight: 500;
@@ -246,7 +259,9 @@
 
 
 /* ── HeroUI Input / TextField slots ──
-   Maps to components.css § INPUT (.input-field / -label / -error-msg). */
+   Maps to components.css § INPUT (.input-field / -label / -error-msg). HeroUI's
+   Input styles states via BOTH native pseudo-classes and data-attributes
+   (verified in @heroui/styles 3.2.2) — target both so the override always wins. */
 .input,
 [data-slot="textfield"] .input {
   font-size: 0.875rem;
@@ -258,13 +273,15 @@
   width: 100%;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
-.input[data-hovered] { border-color: #b0b0b0; }
-.input[data-focused] {
+.input:hover,
+.input[data-hovered="true"] { border-color: #b0b0b0; }
+.input:focus-visible,
+.input[data-focus-visible="true"] {
   border-color: #E01135;
   box-shadow: 0 0 0 3px rgba(224, 17, 53, 0.08);
 }
-.input[data-invalid],
-[data-slot="textfield"][data-invalid] .input { border-color: #E01135; }
+.input[data-invalid="true"],
+[data-slot="textfield"][data-invalid="true"] .input { border-color: #E01135; }
 
 .label {
   font-size: 0.875rem;
