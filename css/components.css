@@ -311,6 +311,9 @@ html {
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
+  /* Card titles default to griffith-black; muted subtitles override with their
+     own grey class. Means header text is dark without a per-title colour. */
+  color: #000000;
 }
 
 .card-body {
