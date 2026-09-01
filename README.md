@@ -18,7 +18,7 @@ Use `@main` for the latest, or pin to a tag (e.g. `@v1.0`) for production stabil
 
 ## Folders
 
-- `teicons/` — TimeEdit-related icons (calendar, search, eye, pin, etc.)
+- `teicons/` — TimeEdit-related icons (calendar, search, eye, location, etc.)
 - `css/` — Griffith design-system stylesheets (canonical; see `griffith-app-system` LOGIC.md D8)
 - `fonts/` — Griffith Sans Display (Regular + Bold), referenced by `css/theme.css`
 
