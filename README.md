@@ -19,7 +19,7 @@ Use `@main` for the latest, or pin to a tag (e.g. `@v1.0`) for production stabil
 ## Folders
 
 - `teicons/` — TimeEdit-related icons (calendar, search, eye, location, etc.)
-- `modoicons/` — Modo app icons (currently empty placeholder)
+- `modoassets/` — Modo app assets
 - `css/` — Griffith design-system stylesheets (canonical; see `griffith-app-system` LOGIC.md D8)
 - `fonts/` — Griffith Sans Display (Regular + Bold), referenced by `css/theme.css`
 
